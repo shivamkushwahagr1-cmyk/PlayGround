@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101c1b" />
+  <title>Wildbound — The Verdant Reach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <canvas id="game" aria-label="Wildbound game world"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Wildbound home"><span class="brand-mark">✳</span><span>WILDBOUND<small>THE VERDANT REACH</small></span></a>
+      <div class="location"><span class="location-dot"></span><span id="biome-label">Mosslight Forest</span><span class="location-sep">/</span><span class="weather-label" id="weather-label">CLEAR SKIES</span></div>
+      <div class="top-actions"><div class="day-pill"><span>DAY</span><b id="day-count">01</b><i>☀</i></div><button class="icon-btn" id="map-btn" aria-label="Open map">⌖</button><button class="icon-btn" id="pause-btn" aria-label="Pause">Ⅱ</button></div>
+    </header>
+    <section class="left-hud">
+      <div class="player-card"><div class="avatar">✦</div><div class="player-info"><div class="level-line"><b>WAYFARER</b><span>LV <b id="level">01</b></span></div><div class="xp-track"><i id="xp-fill"></i></div><div class="xp-caption"><span>FIELD NOTES</span><span id="xp-value">0 / 100 XP</span></div></div></div>
+      <div class="vitals"><div class="vital-row"><span class="vital-icon health-icon">♥</span><div class="vital-track"><i id="health-fill"></i></div><span class="vital-value" id="health-value">100</span></div><div class="vital-row"><span class="vital-icon stamina-icon">ϟ</span><div class="vital-track"><i id="stamina-fill"></i></div><span class="vital-value" id="stamina-value">100</span></div><div class="vital-row"><span class="vital-icon hunger-icon">◉</span><div class="vital-track"><i id="hunger-fill"></i></div><span class="vital-value" id="hunger-value">100</span></div></div>
+      <div class="weather-card"><span class="weather-icon" id="weather-icon">☀</span><div><b id="weather-title">GENTLE BREEZE</b><small id="weather-subtitle">A good day to wander.</small></div></div>
+      <div class="objective-card"><div class="eyebrow"><span class="eyebrow-line"></span> FIELD JOURNAL</div><b id="objective-title">A place to call home</b><p id="objective-text">Gather wood and stone, then build your first little camp.</p><div class="objective-progress"><span id="objective-count">WOOD 0/5 · STONE 0/3</span><span>↗</span></div></div>
+      <div class="resource-strip"><span>PACK</span><div><b>▰ <i id="wood-count">0</i></b><small>wood</small></div><div><b>◈ <i id="stone-count">0</i></b><small>stone</small></div><div><b>✧ <i id="fiber-count">0</i></b><small>fiber</small></div></div>
+    </section>
+    <div class="world-hint" id="world-hint"><span class="hint-key">E</span><span>Explore the wilds</span></div>
+    <div class="toast" id="toast"></div>
+    <section class="right-hud">
+      <div class="mini-map"><canvas id="minimap" width="180" height="180"></canvas><div class="map-label">REACH SURVEY <span>↗</span></div><div class="map-coords" id="coordinates">N 04 · E 12</div></div>
+      <div class="crew-panel"><div class="section-heading"><span>YOUR COMPANION</span><span class="crew-count" id="crew-count">0 / 1</span></div><div class="empty-companion" id="empty-companion"><span>✧</span><p>No companion yet.<br><b>Find a wildling to befriend.</b></p></div><div class="companion-card hidden" id="companion-card"></div></div>
+      <button class="quick-capture" id="capture-button"><span class="capture-orb">✧</span><span><b>WILDING ORB</b><small id="orb-count">2 BASIC ORBS</small></span><span class="capture-key">Q</span></button>
+    </section>
+    <div class="bottom-hud"><div class="hotbar"><button class="hotbar-slot active" data-slot="bow"><span class="slot-art">⌁</span><span class="slot-number">1</span><span class="slot-name">FIELD BOW</span></button><button class="hotbar-slot" data-slot="spear"><span class="slot-art">╱</span><span class="slot-number">2</span><span class="slot-name">GARDEN SPEAR</span></button><button class="hotbar-slot" data-slot="orb"><span class="slot-art">✧</span><span class="slot-number">3</span><span class="slot-name">WILDING ORB</span></button><button class="hotbar-slot" data-slot="food"><span class="slot-art">◉</span><span class="slot-number">4</span><span class="slot-name">BERRY BUN</span></button></div><div class="controls-note"><span>WASD</span> MOVE <span>CLICK</span> ATTACK <span>Q</span> CAPTURE <span>E</span> INTERACT</div></div>
+    <div class="touch-controls"><div class="joystick" id="joystick"><div class="joy-knob" id="joy-knob"></div></div><div class="touch-actions"><button id="touch-interact" class="touch-btn">E<small>USE</small></button><button id="touch-attack" class="touch-btn attack-touch">⌁<small>FIRE</small></button><button id="touch-capture" class="touch-btn capture-touch">✧<small>ORB</small></button></div></div>
+    <div class="modal-backdrop hidden" id="modal-backdrop"><section class="modal" id="modal-content"></section></div>
+    <div class="start-overlay" id="start-overlay"><div class="start-card"><div class="start-kicker">A WILDERNESS WORTH KNOWING</div><div class="start-title">Find your<br><em>own wild.</em></div><p>Meet the wildlings, make a home, and see what the horizon holds.</p><button id="begin-button">STEP INTO THE REACH <span>→</span></button><small>BEST PLAYED IN LANDSCAPE · SOUND OPTIONAL</small></div><div class="start-decoration">✳</div></div>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
